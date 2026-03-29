@@ -1,61 +1,147 @@
-<section class="min-h-screen bg-[var(--c-bg-primary)] py-8 px-4 sm:px-6 lg:px-8">
-  <div class="max-w-7xl mx-auto">
+<section class="min-h-screen bg-[var(--c-bg-primary)] py-16 px-4 sm:px-6 lg:px-8 font-sans pb-32">
+  <div class="max-w-4xl mx-auto">
     
-    <header class="text-center mb-10">
-      <h1 class="text-4xl md:text-5xl font-bold text-[var(--c-text-primary)] mb-4">Меню Old Street</h1>
-      <p class="text-lg text-[var(--c-text-secondary)]">Оберіть свої улюблені страви та напої</p>
+    <header class="text-center mb-16">
+      <h1 class="text-5xl md:text-7xl font-serif font-bold text-[var(--c-text-primary)] tracking-tight mb-6">Old Street</h1>
+      <p class="text-lg md:text-xl text-[var(--c-text-secondary)] uppercase tracking-[0.3em]">Меню ресторану</p>
+      <div class="w-24 h-[2px] bg-[var(--c-border)] mx-auto mt-10"></div>
     </header>
 
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-      
-      @for (item of menuItems(); track item.name) {
-        <article class="flex flex-col bg-[var(--c-bg-secondary)] rounded-2xl border border-[var(--c-border)] overflow-hidden transition-transform hover:-translate-y-1 hover:shadow-lg">
-          
-          <div class="relative h-56 w-full overflow-hidden bg-[var(--c-border)] flex items-center justify-center">
-            @if (item.imageUrl) {
-              <img 
-                [src]="item.imageUrl" 
-                [alt]="item.name" 
-                class="object-cover w-full h-full transition-transform duration-500 hover:scale-105"
-                loading="lazy"
-              >
-            } @else {
-              <span class="material-symbols-outlined text-5xl text-[var(--c-text-secondary)]" aria-hidden="true">
-                local_cafe
-              </span>
-            }
-          </div>
-
-          <div class="p-5 flex flex-col flex-grow">
-            
-            <div class="flex justify-between items-start mb-3 gap-3">
-              <h2 class="text-xl font-bold text-[var(--c-text-primary)] leading-tight">
-                {{ item.name }}
+    <div class="flex flex-col gap-6">
+      @for (category of groupedMenu(); track category.name) {
+        <button 
+            (click)="toggleCategory(category.name)"
+            class="w-full flex items-center justify-between bg-[var(--c-bg-secondary)] border border-[var(--c-border)] rounded-2xl p-5 sm:p-6 transition-all duration-300 hover:shadow-md focus:outline-none"
+            [class.ring-2]="expandedCategories().has(category.name)"
+            [class.ring-[var(--c-text-secondary)]]="expandedCategories().has(category.name)"
+          >
+            <div class="flex items-center gap-4">
+              <h2 class="text-2xl sm:text-3xl font-serif italic text-[var(--c-text-primary)] tracking-wider">
+                {{ category.name }}
               </h2>
-              <span class="text-lg font-bold whitespace-nowrap text-[var(--c-text-primary)] bg-[var(--c-border)] px-2 py-1 rounded-lg">
-                {{ item.price }} ₴
+              <span class="text-sm font-sans font-semibold text-[var(--c-text-secondary)] bg-[var(--c-bg-primary)] border border-[var(--c-border)] px-3 py-1 rounded-full">
+                {{ category.items.length }}
               </span>
             </div>
-            
-            <p class="text-sm text-[var(--c-text-secondary)] flex-grow mb-4 leading-relaxed">
-              {{ item.description }}
-            </p>
-            
-            <div class="mt-auto border-t border-[var(--c-border)] pt-3 flex items-center justify-between text-sm text-[var(--c-text-secondary)]">
-              @if (item.weight) {
-                <span class="flex items-center gap-1 font-medium">
-                  <span class="material-symbols-outlined text-[18px]">scale</span>
-                  {{ item.weight }}
-                </span>
-              } @else {
-                <span></span>
+            <span class="material-symbols-outlined text-3xl text-[var(--c-text-secondary)] transition-transform duration-300" [class.rotate-180]="expandedCategories().has(category.name)">
+              expand_more
+            </span>
+          </button>
+
+          @if (expandedCategories().has(category.name)) {
+            <div class="flex flex-col gap-10 mt-8 px-2 sm:px-6 pb-8 animate-fade-in">
+              @for (item of category.items; track item.name) {
+                <article class="group flex flex-col sm:flex-row gap-6 items-start sm:items-center transition-all duration-300 hover:bg-[var(--c-bg-secondary)] p-4 -mx-4 rounded-2xl">
+                  
+                  @if (item.imageUrl) {
+                    <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-[var(--c-bg-primary)] ring-1 ring-[var(--c-border)] shadow-sm">
+                      <img [src]="item.imageUrl" [alt]="item.name" class="w-full h-full object-cover" loading="lazy">
+                    </div>
+                  } @else {
+                    <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[var(--c-bg-secondary)] border-2 border-[var(--c-bg-primary)] ring-1 ring-[var(--c-border)] flex items-center justify-center">
+                      <span class="material-symbols-outlined text-3xl text-[var(--c-text-secondary)] opacity-50">local_cafe</span>
+                    </div>
+                  }
+    
+                  <div class="flex-grow w-full flex flex-col justify-center">
+                    
+                    <div class="flex items-baseline w-full gap-4 mb-2">
+                      <h3 class="text-xl sm:text-2xl font-bold text-[var(--c-text-primary)] tracking-wide">{{ item.name }}</h3>
+                      <div class="flex-grow border-b-2 border-dotted border-[var(--c-text-secondary)] opacity-30 relative top-[-6px]"></div>
+                      <span class="text-xl sm:text-2xl font-bold text-[var(--c-text-primary)] whitespace-nowrap">{{ item.price }} ₴</span>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 mt-1">
+                      <p class="text-[var(--c-text-secondary)] text-sm sm:text-base leading-relaxed max-w-xl italic">{{ item.description }}</p>
+                      
+                      <div class="flex items-center gap-4 shrink-0 mt-2 sm:mt-0">
+                        @if (item.weight) {
+                          <span class="text-xs uppercase tracking-wider font-semibold text-[var(--c-text-secondary)]/80 bg-[var(--c-bg-primary)] border border-[var(--c-border)] px-2 py-1 rounded">
+                            {{ item.weight }}
+                          </span>
+                        }
+                        
+                        @if (getItemQuantity(item) > 0) {
+                          <div class="flex items-center bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] rounded-full overflow-hidden h-8 font-bold">
+                            <button (click)="removeFromCart(item)" class="w-8 h-full flex items-center justify-center hover:opacity-70 transition-opacity">-</button>
+                            <span class="w-4 text-center text-sm">{{ getItemQuantity(item) }}</span>
+                            <button (click)="addToCart(item)" class="w-8 h-full flex items-center justify-center hover:opacity-70 transition-opacity">+</button>
+                          </div>
+                        } @else {
+                          <button (click)="addToCart(item)" class="h-8 px-4 rounded-full border border-[var(--c-border)] text-sm font-medium text-[var(--c-text-primary)] hover:bg-[var(--c-text-primary)] hover:text-[var(--c-bg-primary)] transition-colors">
+                            В кошик
+                          </button>
+                        }
+                      </div>
+
+                    </div>
+                  </div>
+                </article>
               }
             </div>
-            
-          </div>
-        </article>
+          }
       }
-      
     </div>
+    
+    <footer class="mt-24 text-center text-[var(--c-text-secondary)] text-sm border-t border-[var(--c-border)] pt-12 pb-8">
+      <span class="material-symbols-outlined text-4xl mb-4 opacity-50">restaurant_menu</span>
+      <p class="tracking-wide">Всі ціни вказані в гривнях.</p>
+    </footer>
   </div>
 </section>
+
+@if (cartCount() > 0) {
+  <div class="fixed bottom-6 left-1/2 -translate-x-1/2 w-[calc(100%-2rem)] max-w-sm bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] rounded-full shadow-2xl z-40 p-1 flex items-center justify-between animate-fade-in cursor-pointer hover:scale-[1.02] transition-transform" (click)="isCartModalOpen.set(true)">
+    <div class="flex items-center gap-3 pl-4">
+      <span class="material-symbols-outlined">room_service</span>
+      <span class="font-medium text-sm">Ваш вибір: {{ cartCount() }} страв</span>
+    </div>
+    <div class="bg-[var(--c-bg-primary)] text-[var(--c-text-primary)] px-5 py-2.5 rounded-full font-bold text-sm">
+      {{ cartTotal() }} ₴
+    </div>
+  </div>
+}
+
+@if (isCartModalOpen()) {
+  <div class="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4 animate-fade-in">
+    <div class="bg-[var(--c-bg-primary)] rounded-3xl w-full max-w-md max-h-[85vh] flex flex-col shadow-2xl border border-[var(--c-border)] overflow-hidden relative">
+      
+      <div class="p-5 border-b border-[var(--c-border)] flex items-center justify-between sticky top-0 bg-[var(--c-bg-primary)] z-10">
+        <h2 class="text-2xl font-serif font-bold text-[var(--c-text-primary)]">Ваше замовлення</h2>
+        <button (click)="isCartModalOpen.set(false)" class="w-8 h-8 flex items-center justify-center rounded-full bg-[var(--c-bg-secondary)] hover:bg-[var(--c-border)] text-[var(--c-text-primary)] transition-colors">
+          <span class="material-symbols-outlined text-xl">close</span>
+        </button>
+      </div>
+
+      <div class="flex-1 overflow-y-auto p-5 flex flex-col gap-4">
+        @for (cartItem of cart(); track cartItem.menuItem.name) {
+          <div class="flex justify-between items-center bg-[var(--c-bg-secondary)] p-3 rounded-xl border border-[var(--c-border)]">
+            <div class="flex flex-col pr-2">
+              <span class="font-bold text-[var(--c-text-primary)] text-sm leading-tight mb-1">{{ cartItem.menuItem.name }}</span>
+              <span class="text-xs text-[var(--c-text-secondary)]">{{ cartItem.menuItem.price }} ₴ / шт.</span>
+            </div>
+            
+            <div class="flex items-center bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] rounded-full overflow-hidden h-7 shrink-0 font-bold">
+              <button (click)="removeFromCart(cartItem.menuItem)" class="w-7 h-full flex items-center justify-center hover:opacity-70 transition-opacity">-</button>
+              <span class="w-4 text-center text-xs">{{ cartItem.quantity }}</span>
+              <button (click)="addToCart(cartItem.menuItem)" class="w-7 h-full flex items-center justify-center hover:opacity-70 transition-opacity">+</button>
+            </div>
+          </div>
+        }
+      </div>
+
+      <div class="p-5 border-t border-[var(--c-border)] bg-[var(--c-bg-secondary)] mt-auto">
+        <div class="flex justify-between items-center mb-4">
+          <span class="text-[var(--c-text-secondary)] font-medium uppercase tracking-wider text-sm">Всього:</span>
+          <span class="text-2xl font-bold text-[var(--c-text-primary)]">{{ cartTotal() }} ₴</span>
+        </div>
+        <div class="flex justify-center">
+          <button (click)="clearCart()" class="w-full py-3 rounded-xl border border-[var(--c-border)] text-[var(--c-text-primary)] font-medium hover:bg-[var(--c-border)] transition-colors text-sm">
+            Очистити список
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </div>
+}

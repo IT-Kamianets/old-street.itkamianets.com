@@ -4,4 +4,5 @@ export interface MenuItem {
   description: string;
   weight: string;
   imageUrl: string | null;
+  category: string;
 }
