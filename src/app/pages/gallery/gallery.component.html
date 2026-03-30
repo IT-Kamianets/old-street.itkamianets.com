@@ -1,0 +1,51 @@
+<section class="min-h-screen bg-[var(--c-bg-primary)] py-16 px-4 sm:px-6 lg:px-8 font-sans">
+  <div class="max-w-6xl mx-auto">
+    
+    <header class="flex items-center justify-between mb-20 pb-6 border-b border-[var(--c-border)] gap-6">
+      <a 
+        routerLink="/" 
+        class="flex items-center gap-2 text-[var(--c-text-secondary)] hover:text-[var(--c-text-primary)] transition-colors group"
+      >
+        <span class="material-symbols-outlined text-2xl group-hover:-translate-x-1 transition-transform">
+          arrow_back
+        </span>
+        <span class="font-medium text-sm">Назад до меню</span>
+      </a>
+      
+      <div class="text-right">
+        <h1 class="text-4xl md:text-5xl font-serif font-bold text-[var(--c-text-primary)] tracking-tight mb-2">Атмосфера</h1>
+        <p class="text-[var(--c-text-secondary)] uppercase tracking-widest text-xs">Old Street у фотографіях</p>
+      </div>
+    </header>
+
+    <div class="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+      
+      @for (photo of photos(); track photo.url) {
+        <article class="relative group overflow-hidden rounded-2xl border border-[var(--c-border)] shadow-sm break-inside-avoid animate-fade-in">
+          
+          <img 
+            [src]="photo.url" 
+            [alt]="photo.alt" 
+            class="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+            loading="lazy"
+          >
+
+          @if (photo.title) {
+            <div class="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+              <h3 class="text-xl font-bold text-white tracking-wide">
+                {{ photo.title }}
+              </h3>
+            </div>
+          }
+        </article>
+      }
+
+    </div>
+    
+    <footer class="mt-24 text-center text-[var(--c-text-secondary)] text-sm border-t border-[var(--c-border)] pt-12">
+      <span class="material-symbols-outlined text-4xl mb-4 opacity-50">camera_alt</span>
+      <p class="tracking-wide">Краще один раз побачити на власні очі. Чекаємо на вас!</p>
+    </footer>
+
+  </div>
+</section>
