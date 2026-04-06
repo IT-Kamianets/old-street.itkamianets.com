@@ -22,14 +22,15 @@ interface CartItem {
 })
 export class LandingComponent {
   public menuItems = signal<MenuItem[]>(MENU_DATA);
-  public expandedCategories = signal<Set<string>>(new Set());
   
+  // Логіка замовлення
   public cart = signal<CartItem[]>([]);
   public isCartModalOpen = signal<boolean>(false);
 
   public cartCount = computed(() => this.cart().reduce((acc, item) => acc + item.quantity, 0));
   public cartTotal = computed(() => this.cart().reduce((acc, item) => acc + (item.menuItem.price * item.quantity), 0));
 
+  // Групуємо меню, але тепер без логіки згортання
   public groupedMenu = computed<MenuCategory[]>(() => {
     const items = this.menuItems();
     const categoriesMap = new Map<string, MenuItem[]>();
@@ -48,15 +49,6 @@ export class LandingComponent {
 
     return result;
   });
-
-  public toggleCategory(categoryName: string): void {
-    this.expandedCategories.update(set => {
-      const newSet = new Set(set);
-      newSet.has(categoryName) ? newSet.delete(categoryName) : newSet.add(categoryName);
-      return newSet;
-    });
-  }
-
 
   public getItemQuantity(item: MenuItem): number {
     const cartItem = this.cart().find(c => c.menuItem.name === item.name);
