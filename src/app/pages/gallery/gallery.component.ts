@@ -16,7 +16,6 @@ interface GalleryPhoto {
   styleUrl: './gallery.component.scss'
 })
 export class GalleryComponent {
-  // Масив фотографій для галереї
   public photos = signal<GalleryPhoto[]>([
     {
       url: 'https://lh3.googleusercontent.com/gps-cs-s/AHVAwerJqvqWHGHigjSWI3Pdtxdv_EeaT8uR8h53RWfGKQ53fylkHpWw0ZHKiAZa66QveBaKwxWfhs3auZIbxruNw8-AebbdPU96YU-M9ksTzekEf6gyFm9_dLyqHp3T0Evn4-0E-Vg7=s0',
@@ -60,7 +59,7 @@ export class GalleryComponent {
     },
     {
       url: 'https://lh3.googleusercontent.com/p/AF1QipOwDLccJ3r0bQKH1gqVsDyQ68O87SOaLqOe8siJ=s677-k-no',
-      alt: 'Atmospheric evening view',
+      alt: 'Interior',
       title: 'Головний зал'
     }
   ]);
