@@ -22,46 +22,54 @@
             </div>
           </div>
 
-          <div class="flex flex-col gap-8 pb-4">
+          <div class="flex flex-col gap-0 sm:gap-6 pb-4">
             @for (item of category.items; track item.name) {
-              <article class="group flex flex-col sm:flex-row gap-6 items-start sm:items-center transition-all duration-300 hover:bg-[var(--c-bg-secondary)] p-4 -mx-4 rounded-2xl">
+              
+              <article class="cursor-default flex flex-row gap-4 sm:gap-6 items-start py-4 sm:p-4 border-b border-[var(--c-border)] sm:border sm:rounded-2xl last:border-0 sm:last:border">
                 
                 @if (item.imageUrl) {
-                  <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border-2 border-[var(--c-bg-primary)] ring-1 ring-[var(--c-border)] shadow-sm">
+                  <div class="shrink-0 w-[110px] h-[110px] sm:w-[140px] sm:h-[140px] rounded-2xl overflow-hidden border border-[var(--c-border)] shadow-sm relative">
                     <img [src]="item.imageUrl" [alt]="item.name" class="w-full h-full object-cover" loading="lazy">
                   </div>
                 } @else {
-                  <div class="shrink-0 w-24 h-24 sm:w-28 sm:h-28 rounded-full bg-[var(--c-bg-secondary)] border-2 border-[var(--c-bg-primary)] ring-1 ring-[var(--c-border)] flex items-center justify-center">
-                    <span class="material-symbols-outlined text-3xl text-[var(--c-text-secondary)] opacity-50">local_cafe</span>
+                  <div class="shrink-0 w-[110px] h-[110px] sm:w-[140px] sm:h-[140px] rounded-2xl bg-[var(--c-bg-secondary)] border border-[var(--c-border)] flex items-center justify-center">
+                    <span class="material-symbols-outlined text-3xl sm:text-4xl text-[var(--c-text-secondary)] opacity-50">local_cafe</span>
                   </div>
                 }
   
-                <div class="flex-grow w-full flex flex-col justify-center">
+                <div class="flex-grow min-w-0 flex flex-col justify-between py-0.5 min-h-[110px] sm:min-h-[140px]">
                   
-                  <div class="flex items-baseline w-full gap-4 mb-2">
-                    <h3 class="text-xl sm:text-2xl font-bold text-[var(--c-text-primary)] tracking-wide">{{ item.name }}</h3>
-                    <div class="flex-grow border-b-2 border-dotted border-[var(--c-text-secondary)] opacity-30 relative top-[-6px]"></div>
-                    <span class="text-xl sm:text-2xl font-bold text-[var(--c-text-primary)] whitespace-nowrap">{{ item.price }} ₴</span>
+                  <div>
+                    <h3 class="text-base sm:text-xl font-bold text-[var(--c-text-primary)] leading-tight mb-1">
+                      {{ item.name }}
+                    </h3>
+                    <p class="text-[var(--c-text-secondary)] text-[13px] sm:text-base leading-relaxed">
+                      {{ item.description }}
+                    </p>
                   </div>
                   
-                  <div class="flex flex-col sm:flex-row sm:justify-between sm:items-end gap-3 mt-1">
-                    <p class="text-[var(--c-text-secondary)] text-sm sm:text-base leading-relaxed max-w-xl italic">{{ item.description }}</p>
+                  <div class="flex items-center justify-between mt-4 gap-2">
                     
-                    <div class="flex items-center gap-4 shrink-0 mt-2 sm:mt-0">
+                    <div class="flex items-center gap-2 sm:gap-3 flex-wrap">
+                      <span class="text-base sm:text-lg font-bold text-[var(--c-text-primary)] leading-none">{{ item.price }} ₴</span>
+                      
                       @if (item.weight) {
-                        <span class="text-xs uppercase tracking-wider font-semibold text-[var(--c-text-secondary)]/80 bg-[var(--c-bg-primary)] border border-[var(--c-border)] px-2 py-1 rounded">
+                        <span class="text-[12px] sm:text-sm text-[var(--c-text-secondary)] font-medium flex items-center gap-1.5 opacity-80">
+                          <span class="w-1 h-1 rounded-full bg-[var(--c-text-secondary)] opacity-50"></span>
                           {{ item.weight }}
                         </span>
                       }
-                      
+                    </div>
+                    
+                    <div class="shrink-0 ml-auto">
                       @if (getItemQuantity(item) > 0) {
-                        <div class="flex items-center bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] rounded-full overflow-hidden h-8 font-bold">
+                        <div class="flex items-center bg-[var(--c-text-primary)] text-[var(--c-bg-primary)] rounded-full overflow-hidden h-8 font-bold shadow-sm">
                           <button (click)="removeFromCart(item)" class="w-8 h-full flex items-center justify-center hover:opacity-70 transition-opacity">-</button>
                           <span class="w-4 text-center text-sm">{{ getItemQuantity(item) }}</span>
                           <button (click)="addToCart(item)" class="w-8 h-full flex items-center justify-center hover:opacity-70 transition-opacity">+</button>
                         </div>
                       } @else {
-                        <button (click)="addToCart(item)" class="h-8 px-4 rounded-full border border-[var(--c-border)] text-sm font-medium text-[var(--c-text-primary)] hover:bg-[var(--c-text-primary)] hover:text-[var(--c-bg-primary)] transition-colors">
+                        <button (click)="addToCart(item)" class="h-8 px-4 rounded-full bg-[var(--c-bg-secondary)] sm:bg-[var(--c-bg-primary)] border border-[var(--c-border)] text-sm font-semibold text-[var(--c-text-primary)] hover:border-[var(--c-text-primary)] transition-colors shadow-sm">
                           Додати
                         </button>
                       }
@@ -70,6 +78,7 @@
                   </div>
                 </div>
               </article>
+              
             }
           </div>
         </div>
