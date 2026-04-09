@@ -1,7 +1,9 @@
-import { Component, signal, computed } from '@angular/core';
+import { Component, signal, computed, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { TranslatePipe, TranslateService } from 'wacom';
 import { MENU_DATA } from './menu-data.const';
 import { MenuItem } from '../../interfaces/menu-item.interface';
+import { LanguageService } from '../../feature/language/language.service';
 
 interface MenuCategory {
   name: string;
@@ -16,11 +18,16 @@ interface CartItem {
 @Component({
   selector: 'app-landing',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, TranslatePipe],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss'
 })
 export class LandingComponent {
+  private readonly languageService = inject(LanguageService);
+  private readonly translateService = inject(TranslateService);
+
+  public currentLang = this.languageService.language;
+
   public menuItems = signal<MenuItem[]>(MENU_DATA);
   
   public cart = signal<CartItem[]>([]);
@@ -47,6 +54,28 @@ export class LandingComponent {
 
     return result;
   });
+
+  public getDisplayPrice(priceUah: number): string {
+    const lang = this.languageService.language();
+    
+    const RATE_EUR = 50; 
+    const RATE_USD = 43; 
+
+    if (lang === 'en') {
+      return `$${Math.round(priceUah / RATE_USD)}`;
+    } else if (lang === 'de' || lang === 'fr' || lang === 'pl') {
+      return `${Math.round(priceUah / RATE_EUR)} €`;
+    }
+    
+    return `${priceUah} ₴`;
+  }
+
+  public getDisplayWeight(weight: string | undefined): string {
+    if (!weight) return '';
+    const translatedG = this.translateService.translate('г')();
+    const translatedMl = this.translateService.translate('мл')();
+    return weight.replace('г', translatedG).replace('мл', translatedMl);
+  }
 
   public getItemQuantity(item: MenuItem): number {
     const cartItem = this.cart().find(c => c.menuItem.name === item.name);

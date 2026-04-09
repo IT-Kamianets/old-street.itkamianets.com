@@ -1,6 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { TranslatePipe } from 'wacom';
+import { LanguageService } from '../../feature/language/language.service';
 
 interface GalleryPhoto {
   url: string;
@@ -11,11 +13,14 @@ interface GalleryPhoto {
 @Component({
   selector: 'app-gallery',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, TranslatePipe],
   templateUrl: './gallery.component.html',
   styleUrl: './gallery.component.scss'
 })
 export class GalleryComponent {
+  public readonly languageService = inject(LanguageService);
+  public currentLang = this.languageService.language;
+  
   public photos = signal<GalleryPhoto[]>([
     {
       url: 'https://lh3.googleusercontent.com/gps-cs-s/AHVAwerJqvqWHGHigjSWI3Pdtxdv_EeaT8uR8h53RWfGKQ53fylkHpWw0ZHKiAZa66QveBaKwxWfhs3auZIbxruNw8-AebbdPU96YU-M9ksTzekEf6gyFm9_dLyqHp3T0Evn4-0E-Vg7=s0',

@@ -1,47 +1,46 @@
 <header class="border-b border-[var(--c-border)] bg-[var(--c-bg-secondary)]/95 backdrop-blur supports-[backdrop-filter]:bg-[var(--c-bg-secondary)]/80">
-	<div class="mx-auto flex min-h-16 w-full max-w-[var(--container)] items-center px-4 py-3 sm:px-6">
-		
-		<div class="flex flex-1 justify-start">
-			<a [aria-label]="'Go to homepage' | translate" class="inline-flex items-center" routerLink="/">
-				<img
-					class="h-10 w-auto object-contain"
-					alt="Old Street logo"
-					src="https://cdn-media.choiceqr.com/prod-eat-old-street/logo/thumbnail_FlpDJkY-SVOSdwC-ovUURct_x-h-G.png"
-				/>
-			</a>
-		</div>
-
-		<div class="flex shrink-0 justify-center">
-			<a
-				routerLink="/gallery"
-				routerLinkActive="!text-[var(--c-text-primary)] !bg-[var(--c-bg-tertiary)] shadow-sm border-[var(--c-border)]"
-				class="inline-flex items-center justify-center gap-2 px-5 h-10 border border-transparent rounded-full text-sm font-semibold text-[var(--c-text-secondary)] hover:text-[var(--c-text-primary)] hover:bg-[var(--c-bg-secondary)] hover:border-[var(--c-border)] transition-all"
-			>
-				<span class="material-symbols-outlined text-[20px] leading-none" aria-hidden="true">photo_library</span>
-				<span class="leading-none mt-[1px]">Галерея</span>
-			</a>
-		</div>
-
-		<div class="flex flex-1 items-center justify-end gap-2">
+	@for (lang of [currentLang()]; track lang) {
+		<div class="mx-auto flex min-h-16 w-full max-w-[var(--container)] items-center px-4 py-3 sm:px-6">
 			
-			<div class="relative flex items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-bg-primary)] p-1 shadow-[var(--shadow-sm)]">
+			<div class="flex flex-1 justify-start">
+				<a [attr.aria-label]="'Go to homepage' | translate" class="inline-flex items-center" routerLink="/">
+					<img
+						class="h-10 w-auto object-contain"
+						alt="Old Street logo"
+						src="https://cdn-media.choiceqr.com/prod-eat-old-street/logo/thumbnail_FlpDJkY-SVOSdwC-ovUURct_x-h-G.png"
+					/>
+				</a>
+			</div>
+
+			<div class="flex shrink-0 justify-center">
+				<a
+					routerLink="/gallery"
+					routerLinkActive="!text-[var(--c-text-primary)] !bg-[var(--c-bg-tertiary)] shadow-sm border-[var(--c-border)]"
+					class="inline-flex items-center justify-center gap-2 px-5 h-10 border border-transparent rounded-full text-sm font-semibold text-[var(--c-text-secondary)] hover:text-[var(--c-text-primary)] hover:bg-[var(--c-bg-secondary)] hover:border-[var(--c-border)] transition-all"
+				>
+					<span class="material-symbols-outlined text-[20px] leading-none" aria-hidden="true">photo_library</span>
+					<span class="leading-none mt-[1px]">{{ 'Галерея' | translate }}</span>
+				</a>
+			</div>
+
+			<div class="flex flex-1 items-center justify-end gap-2 sm:gap-3">
+				
+				<div class="relative flex shrink-0 items-center gap-1 rounded-full border border-[var(--c-border)] bg-[var(--c-bg-primary)] p-1 shadow-[var(--shadow-sm)]">
 				<button
-					class="inline-flex h-9 items-center gap-2 rounded-full px-3 text-sm font-medium text-[var(--c-text-primary)] transition-colors duration-200 hover:bg-[var(--c-bg-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--c-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--c-bg-secondary)]"
+					class="inline-flex h-9 shrink-0 items-center gap-2 rounded-full px-2 sm:px-3 text-sm font-medium text-[var(--c-text-primary)] transition-colors duration-200 hover:bg-[var(--c-bg-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--c-primary)]"
 					[attr.aria-label]="languageCycleLabel()"
 					(click)="nextLanguage()"
 					type="button"
 				>
 					<img
-						class="h-5 w-7 rounded-[4px] border border-black/10 object-cover"
+						class="h-5 w-7 min-w-[28px] shrink-0 rounded-[4px] border border-black/10 object-cover"
 						[alt]="currentLanguage().label"
 						[src]="currentLanguage().flagSrc"
-						width="28"
-						height="20"
 					/>
 				</button>
 
 				<button
-					class="inline-flex h-9 w-9 items-center justify-center rounded-full text-[var(--c-text-secondary)] transition-colors duration-200 hover:bg-[var(--c-bg-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--c-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--c-bg-secondary)]"
+					class="inline-flex h-9 w-7 sm:w-9 shrink-0 items-center justify-center rounded-full text-[var(--c-text-secondary)] transition-colors duration-200 hover:bg-[var(--c-bg-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--c-primary)]"
 					[attr.aria-expanded]="languageMenuOpen()"
 					[attr.aria-label]="languageMenuLabel()"
 					(click)="toggleLanguageMenu()"
@@ -53,19 +52,17 @@
 				</button>
 
 				@if (languageMenuOpen()) {
-					<div class="absolute right-0 top-[calc(100%+0.5rem)] z-10 min-w-48 overflow-hidden rounded-2xl border border-[var(--c-border)] bg-[var(--c-bg-primary)] p-1 shadow-[var(--shadow-md)]">
+					<div class="absolute right-0 top-[calc(100%+0.5rem)] z-50 min-w-48 overflow-hidden rounded-2xl border border-[var(--c-border)] bg-[var(--c-bg-primary)] p-1 shadow-[var(--shadow-md)] animate-fade-in">
 						@for (language of languages(); track language.code) {
 							<button
-								class="flex w-full items-center gap-3 rounded-[calc(var(--radius-btn)-0.25rem)] px-3 py-2 text-left text-sm text-[var(--c-text-primary)] transition-colors duration-200 hover:bg-[var(--c-bg-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--c-primary)]"
+								class="flex w-full items-center gap-3 rounded-xl px-3 py-2 text-left text-sm text-[var(--c-text-primary)] transition-colors duration-200 hover:bg-[var(--c-bg-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--c-primary)]"
 								(click)="setLanguage(language)"
 								type="button"
 							>
 								<img
-									class="h-5 w-7 rounded-[4px] border border-black/10 object-cover"
+									class="h-5 w-7 min-w-[28px] shrink-0 rounded-[4px] border border-black/10 object-cover"
 									[alt]="language.label"
 									[src]="language.flagSrc"
-									width="28"
-									height="20"
 								/>
 								<span>{{ language.label }}</span>
 							</button>
@@ -74,17 +71,18 @@
 				}
 			</div>
 
-			<button
-				class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--c-border)] bg-[var(--c-bg-primary)] text-[var(--c-text-secondary)] transition-colors duration-200 hover:bg-[var(--c-bg-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--c-primary)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--c-bg-secondary)]"
-				[attr.aria-label]="toggleLabel()"
-				(click)="toggleMode()"
-				type="button"
-			>
-				<span class="material-symbols-outlined text-[22px]" aria-hidden="true">
-					{{ toggleIcon() }}
-				</span>
-			</button>
+				<button
+					class="inline-flex h-11 w-11 items-center justify-center rounded-full border border-[var(--c-border)] bg-[var(--c-bg-primary)] text-[var(--c-text-secondary)] transition-colors duration-200 hover:bg-[var(--c-bg-tertiary)] focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-[color:var(--c-primary)]"
+					[attr.aria-label]="toggleLabel()"
+					(click)="toggleMode()"
+					type="button"
+				>
+					<span class="material-symbols-outlined text-[22px]" aria-hidden="true">
+						{{ toggleIcon() }}
+					</span>
+				</button>
 
+			</div>
 		</div>
-	</div>
+	}
 </header>
