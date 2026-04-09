@@ -23,6 +23,13 @@ export const de = {
     'Назад до меню': 'Zurück zur Speisekarte',
     'Краще один раз побачити на власні очі. Чекаємо на вас!': 'Besser, es einmal mit eigenen Augen zu sehen. Wir warten auf Sie!',
     'Всі ціни вказані в гривнях.': 'Alle Preise sind in Euro angegeben.',
+    'Головний зал': 'Hauptsaal',
+    'Магія бармена': 'Barkeeper-Magie',
+    'Подача страв': 'Speisenpräsentation',
+    'Затишний куточок': 'Gemütliche Ecke',
+    'Наш бар': 'Unsere Bar',
+    'Обслуговування': 'Service',
+    'Вхід': 'Eingang',
 
     // === КАТЕГОРІЇ ===
     'Сніданки та сендвічі': 'Frühstück & Sandwiches',

@@ -23,6 +23,13 @@ export const en = {
     'Назад до меню': 'Back to menu',
     'Краще один раз побачити на власні очі. Чекаємо на вас!': 'Better to see it once with your own eyes. We are waiting for you!',
     'Всі ціни вказані в гривнях.': 'All prices are in USD.',
+    'Головний зал': 'Main Hall',
+    'Магія бармена': "Bartender's Magic",
+    'Подача страв': 'Food Presentation',
+    'Затишний куточок': 'Cozy Corner',
+    'Наш бар': 'Our Bar',
+    'Обслуговування': 'Service',
+    'Вхід': 'Entrance',
 
     // === КАТЕГОРІЇ ===
     'Сніданки та сендвічі': 'Breakfasts & Sandwiches',
