@@ -4,31 +4,31 @@ export const LANGUAGES: LanguageOption[] = [
 	{
 		code: 'ua',
 		label: 'Українська',
-		flagSrc: 'flags/ukraine.svg',
+		flagSrc: '/assets/flags/ukraine.svg',
 		htmlLang: 'uk',
 	},
 	{
 		code: 'en',
 		label: 'English',
-		flagSrc: 'flags/united-kingdom.svg',
+		flagSrc: '/assets/flags/united-kingdom.svg',
 		htmlLang: 'en',
 	},
 	{
 		code: 'de',
 		label: 'Deutsch',
-		flagSrc: 'flags/germany.svg',
+		flagSrc: '/assets/flags/germany.svg',
 		htmlLang: 'de',
 	},
 	{
 		code: 'fr',
 		label: 'Français',
-		flagSrc: 'flags/france.svg',
+		flagSrc: '/assets/flags/france.svg',
 		htmlLang: 'fr',
 	},
 	{
 		code: 'pl',
 		label: 'Polski',
-		flagSrc: 'flags/poland.svg',
+		flagSrc: '/assets/flags/poland.svg',
 		htmlLang: 'pl',
 	},
 ];
